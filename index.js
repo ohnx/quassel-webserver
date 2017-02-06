@@ -17,6 +17,6 @@ global.app_settings = {
 
 
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 400, height: 360, darkTheme: true});
+  mainWindow = new BrowserWindow({width: 400, height: 360, darkTheme: true, autoHideMenuBar: true});
   mainWindow.loadURL('file://'+__dirname+"/views/index.pug");
 });
