@@ -10,13 +10,19 @@ let mainWindow;
 
 
 global.app_settings = {
-	version: 1,
-	settings: locals.settings.val.default,
-	themes: locals.settings.val.themes
+    version: 1,
+    settings: locals.settings.val.default,
+    themes: locals.settings.val.themes
 };
 
-
+app.commandLine.appendSwitch('--enable-experimental-web-platform-features')
 app.on('ready', function() {
-  mainWindow = new BrowserWindow({width: 400, height: 360, darkTheme: true, autoHideMenuBar: true});
-  mainWindow.loadURL('file://'+__dirname+"/views/index.pug");
+    mainWindow = new BrowserWindow({
+    width: 400, height: 360, darkTheme: true,
+    autoHideMenuBar: true,
+    webPreferences: {
+        experimentalFeatures: true,
+        blinkFeatures: "CSSStickyPosition",
+    }});
+    mainWindow.loadURL('file://'+__dirname+"/views/index.pug");
 });
