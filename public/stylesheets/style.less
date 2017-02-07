@@ -75,6 +75,8 @@ html, body, .container {
     top: 0;
     width: 100%;
     bottom: @box-height;
+    visibility: visible;
+    /*.transition(visibility 0s linear 0s);*/
 }
 
 .pane {
@@ -94,8 +96,22 @@ html, body, .container {
     margin-right: ~"calc(-16.6667% + 32px)";
 }
 
+@media (max-width: 1440px) {
+    /* if screen is smaller than 1440px, min-width of 240px is
+     * used instead of 16.6667%. */
+    #buffer-pane.small {
+        margin-left: -208px;
+    }
+    #nick-pane.small {
+        margin-right: -208px;
+    }
+
+}
+
 .pane.small .buffer-container {
     opacity: 0;
+    .transition(visibility 0s linear 0.5s, opacity 0.5s linear, box-shadow 0.2s ease-in-out;);
+    visibility: hidden;
 }
 
 .animation, .animation .network, .animation .network-channels {
@@ -735,8 +751,8 @@ input[type="number"] {
 }
 
 // Minimum width for the sidebars.
-#buffer-pane:not(.small),
-#nick-pane:not(.small) {
+#buffer-pane,
+#nick-pane {
     min-width: 240px;
 }
 
