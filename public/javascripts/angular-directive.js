@@ -870,4 +870,16 @@ angular.module('quassel')
       }
     }
   };
+}])
+.directive('clickSelf', [function() {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attributes) {
+            element.on("click", function(e) {
+                if (e.target == e.currentTarget) {
+                    scope.$apply(attributes.clickSelf);
+                }
+            });
+        }
+    }
 }]);

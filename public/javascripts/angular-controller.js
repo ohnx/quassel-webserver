@@ -350,6 +350,11 @@ angular.module('quassel')
             // Update title
             var network = $quassel.get().getNetworks().get(channel.network);
             document.title = channel.name + ' (' + network.networkName + ') – Quassel Web App';
+            // hide the buffer list if the window is smaller than 767px
+            var mq = window.matchMedia( "(max-width: 767px)" );
+            if (mq.matches) {
+                $scope.shown = false;
+            }
         } else {
             document.title = 'Quassel Web App';
         }
