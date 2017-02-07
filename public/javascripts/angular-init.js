@@ -4,7 +4,7 @@
 /* global Notification */
 /* global $ */
 
-angular.module('quassel', ['ngQuassel', 'ngAria', 'ngSanitize', 'ui.bootstrap', 'dragAndDrop', 'cgNotify', 'luegg.directives'])
+angular.module('quassel', ['ngQuassel', 'ngAria', 'ngSanitize', 'ui.bootstrap', 'dragAndDrop', 'cgNotify', 'luegg.directives', 'angular-click-outside'])
 .config(['$compileProvider', function ($compileProvider) {
     if (!localStorage.getItem('debug')) {
         $compileProvider.debugInfoEnabled(false);

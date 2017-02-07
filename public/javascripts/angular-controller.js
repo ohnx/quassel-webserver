@@ -360,6 +360,20 @@ angular.module('quassel')
         }
     };
 
+    $scope.maybeCloseBuffers = function() {
+        var mq = window.matchMedia( "(max-width: 767px)" );
+        if (mq.matches) {
+            $scope.shown = false;
+        }
+    }
+
+    $scope.maybeCloseNicks = function() {
+        var mq = window.matchMedia( "(max-width: 767px)" );
+        if (mq.matches) {
+            $scope.shown2 = false;
+        }
+    }
+
     $scope.loadMore = function() {
         if ($scope.buffer !== null
             && (!loadingMoreBacklogs.has($scope.buffer.id)
