@@ -76,6 +76,7 @@ html, body, .container {
     width: 100%;
     bottom: @box-height;
     visibility: visible;
+    touch-action: pan-y;
     /*.transition(visibility 0s linear 0s);*/
 }
 
@@ -760,11 +761,11 @@ input[type="number"] {
     // Overlay the sidebars over the backlog.
     .pane {
         position: absolute;
-        top: 48px;
         bottom: 32px;
         right: 10px;
         z-index: 20;
         box-shadow: 10px 0 10px -5px #000;
+        height: ~"calc(100% - 80px)";
 
         .buffer-container {
             height: ~"calc(100% - 32px)";
@@ -773,7 +774,6 @@ input[type="number"] {
 
         // Only show the expand button when sidebar is collapsed.
         &.small {
-            background: none;
             box-shadow: none;
             height: 32px;
             top: initial;

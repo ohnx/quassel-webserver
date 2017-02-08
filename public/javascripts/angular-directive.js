@@ -882,4 +882,126 @@ angular.module('quassel')
             });
         }
     }
+}])
+.directive('dragPane', [function() {
+    "use strict"
+    return {
+        restrict: 'A',
+        link: function(scope, element, attributes) {
+            const el = element[0]
+            const elstyle = el.style
+            const right = attributes.dragPane == "right"
+            const invert = right ? -1 : 1
+            const marginAttr = right ? "marginRight" : "marginLeft"
+            const show_attr = right ? 'shown2' : 'shown'
+            const attrs = {
+                filter() { return true; },
+                startmove() {
+                    element[0].style.zIndex = 10;
+                    this.curmargin = +window.getComputedStyle(el, null)[marginAttr].slice(0, -2);
+                    elstyle[marginAttr] = (this.curmargin) + 'px'
+                    scope.$apply(() => (scope[show_attr] = true))
+                },
+                move(delta) {
+                    delta = this.clamp(delta)
+                    elstyle.transform = `translate(${delta}px, 0)`;
+                },
+                endmove(delta, velocity) {
+                    delta = this.clamp(delta);
+                    // set the [marginAttr] to the current delta instead of the transform
+                    elstyle.transitionDuration = '0s';
+                    elstyle[marginAttr] = (this.curmargin + (delta * invert)) + 'px';
+                    void el.offsetHeight; // force reflow
+                    // now animate from that margin
+                    elstyle.transform = '';
+                    elstyle.transitionDuration = '';
+                    const displace = Math.abs(delta)
+                    if ((delta < 0) ^ right) {
+                        // commit close
+                        if (displace > 100 || velocity.xy > 0.2) {
+                            scope.$apply(() => (scope[show_attr] = false));
+                        }
+                    } else {
+                        // cancel open
+                        if (displace < 35 && velocity.xy < 0.2) {
+                            scope.$apply(() => (scope[show_attr] = false));
+                        }
+                    }
+                    elstyle[marginAttr] = '';
+                },
+                cancelmove() {
+                    elstyle.transform = ''
+                    elstyle[marginAttr] = ''
+                }
+            }
+            dragX(element[0], Object.assign({}, attrs, {
+                clamp(delta) {
+                    return right ? Math.max(delta, 0) : Math.min(delta, 0)
+                }
+            }))
+
+            dragX(document.body, Object.assign({}, attrs, {
+                filter(touch) { return Math.abs((right ? window.innerWidth : 0) - touch.clientX) < 40 },
+                clamp(delta) {
+                    return Math.min(Math.max(delta * invert, 0), -this.curmargin) * invert;
+                }
+            }))
+            function dragX(element, attrs) {
+                // let filter,startmove,move,endmove,cancelmove
+                let {filter, startmove, move, endmove, cancelmove} = attrs
+                $(element).on('touchstart', (e) => {
+                    const touch = e.changedTouches[0]
+                    const ctx = Object.create(attrs);
+                    if (!ctx.filter(touch)) return;
+                    const startx = touch.clientX;
+                    const starty = touch.clientY;
+                    const starttime = Date.now()
+                    const totalmoved = {x: 0, y: 0}
+                    let touching = true, moving = false
+                    let listener1, listener2, cancel;
+                    $(element).on('touchmove', listener1 = (e) => {
+                        if (!touching) return
+                        const touch = e.changedTouches[0]
+                        let deltax = touch.clientX - startx
+                        let deltay = touch.clientY - starty
+                        // distinguish vertical (scroll) and horizontal (pane move) drags            
+                        totalmoved.x += Math.abs(deltax)
+                        totalmoved.y += Math.abs(deltay)
+                        if ((totalmoved.x > 10 && totalmoved.y < 10) || moving) {
+                            if (!moving) {
+                                // disable browser gestures
+                                element.style.touchAction = 'none' // prevent scrolling
+                                // todo: set touchAction on backlog
+                                ctx.startmove()
+                            }
+                            moving = true;
+                            ctx.move(deltax)
+                        }
+                    }).on('touchend', listener2 = (e) => {
+                        cancel(0);
+                        if (!moving) return;
+                        touching = false
+                        moving = false
+                        const touch = e.changedTouches[0]
+                        let deltax = touch.clientX - startx
+                        let deltay = touch.clientY - starty
+                        const dt = Date.now() - starttime
+                        const velocity = {
+                            x: Math.abs(deltax) / dt, y: Math.abs(deltay) / dt,
+                            xy: Math.sqrt(deltax*deltax + deltay*deltay) / (Date.now() - starttime)
+                        }
+                        ctx.endmove(deltax, velocity);
+                        element.style.touchAction = ''
+                        try {e.preventDefault()} catch(err){}
+                    }).on('touchcancel pointercancel', cancel = (e) => {
+                        if (e.type == 'pointercancel') return // todo: pointercancel gets fired when?
+                        $(element).off('touchmove', listener1)
+                        $(element).off('touchend', listener2)
+                        $(element).off('pointercancel touchcancel', cancel)
+                        if (e != 0) ctx.cancelmove()
+                    })
+                })
+            }
+        }
+    }
 }]);
