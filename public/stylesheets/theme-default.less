@@ -1,7 +1,19 @@
 @import "style.less";
+@import "bootswatch.less";
+@import "yeti.less";
+
+#header .btn, .btn-group .btn, .modal-dialog .btn {
+    padding: 6px 12px;
+}
+
+.logout, .reconnect, .config {
+    margin: 5px 5px 5px 0;
+}
+
+@gray-dark: #333;
 
 // Bootstrap variables
-@body-bg: #EAEAF8;
+// @body-bg: #EAEAF8;
 
 // Custom variables
 @markerline-bg: #d9534f;
@@ -12,7 +24,7 @@
 @highlight-message-bg: @brand-warning;
 @backlog-font: "Droid Sans Mono", monospace;
 @pane-bg: @gray-dark;
-@pane-font: "Roboto Condensed";
+@pane-font: "Lato";
 @pane-color: white;
 @header-bg: @brand-primary;
 @header-color: white;

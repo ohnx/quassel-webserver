@@ -30,6 +30,12 @@
 @mirc-color-14: #888;
 @mirc-color-15: #d2d2d2;
 
+@user-owner-color: #049cdb;
+@user-admin-color: #7a43b6;
+@user-voiced-color: #46a546;
+@user-op-color: #c3325f;
+@user-half-op-color: #ffc40d;
+
 body {
     overflow: hidden;
 }
@@ -83,15 +89,15 @@ html, body, .container {
     font-family: @pane-font;
     color: @pane-color;
     background-color: @pane-bg;
-    width: 16.6667%;
+    width: 12.5%;
 }
 
 #buffer-pane.small {
-    margin-left: ~"calc(-16.6667% + 32px)";
+    margin-left: ~"calc(-12.5% + 32px)";
 }
 
 #nick-pane.small {
-    margin-right: ~"calc(-16.6667% + 32px)";
+    margin-right: ~"calc(-12.5% + 32px)";
 }
 
 .pane.small .buffer-container {
@@ -233,10 +239,9 @@ html, body, .container {
 }
 
 .user-icon {
-    .icon;
     display: inline-block;
     float: left;
-    padding: 5px;
+    padding: 7px;
     font-size: 12px;
     line-height: 1.5;
     text-align: center;
@@ -251,42 +256,31 @@ html, body, .container {
 }
 
 .user-away {
-    color: grey;
+    color: gray;
 }
 
 .user-not-away {
-    color: green;
+    color: white;
 }
 
-.user-owner:before {
-    content: '~ ';
-    font-size: 0.9em;
+.user-owner {
+    color: @user-owner-color;
 }
 
-.user-admin:before {
-    content: '& ';
-    font-size: 0.9em;
+.user-admin {
+    color: @user-admin-color;
 }
 
-.user-voiced:before {
-    content: '\e806 ';
-    font-size: 0.9em;
-    font-family: "quassel-webserver";
-    position: relative;
-    top: 2px;
-    display: inline-block;
-    padding-right: 5px;
-    line-height: 1;
+.user-voiced {
+    color: @user-voiced-color;
 }
 
-.user-op:before {
-    content: '@ ';
-    font-size: 0.9em;
+.user-op {
+    color: @user-op-color;
 }
 
-.user-half-op:before {
-    content: '% ';
-    font-size: 0.9em;
+.user-half-op {
+    color: @user-half-op-color;
 }
 
 .channel-icon {
@@ -725,10 +719,14 @@ input[type="number"] {
 }
 
 // Minimum width for the sidebars.
-#buffer-pane:not(.small),
+#buffer-pane:not(.small) {
+    min-width: 160px;
+}
+
 #nick-pane:not(.small) {
     min-width: 240px;
 }
+
 
 @media (max-width: 767px) {
     // Overlay the sidebars over the backlog.
