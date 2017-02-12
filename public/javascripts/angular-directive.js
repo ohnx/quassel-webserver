@@ -971,7 +971,6 @@ angular.module('quassel')
                             if (!moving) {
                                 // disable browser gestures
                                 element.style.touchAction = 'none' // prevent scrolling
-                                // todo: set touchAction on backlog
                                 ctx.startmove()
                             }
                             moving = true;
@@ -991,13 +990,13 @@ angular.module('quassel')
                             xy: Math.sqrt(deltax*deltax + deltay*deltay) / (Date.now() - starttime)
                         }
                         ctx.endmove(deltax, velocity);
-                        element.style.touchAction = ''
                         try {e.preventDefault()} catch(err){}
                     }).on('touchcancel pointercancel', cancel = (e) => {
                         if (e.type == 'pointercancel') return // todo: pointercancel gets fired when?
                         $(element).off('touchmove', listener1)
                         $(element).off('touchend', listener2)
                         $(element).off('pointercancel touchcancel', cancel)
+                        element.style.touchAction = ''
                         if (e != 0) ctx.cancelmove()
                     })
                 })
