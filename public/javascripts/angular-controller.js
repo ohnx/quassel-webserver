@@ -278,7 +278,7 @@ angular.module('quassel')
                     });
                 }
                 if (updateBufferHighlightOnMessage(buffer, message) === 'high') {
-                    $desktop(buffer.name, message.content);
+                    $desktop((message.sender.split("!", 2))[0] + " in " + buffer.name, message.content);
                 }
             }
         }

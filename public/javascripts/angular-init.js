@@ -240,7 +240,9 @@ angular.module('quassel', ['ngQuassel', 'ngAria', 'ngSanitize', 'ui.bootstrap', 
 
     return function(title, body, timeout){
         if (granted) {
-            var options = {};
+            var options = {
+                icon: 'favicon.ico'
+            };
             timeout = timeout || 5000;
             if (body) options.body = body;
             var notif = new Notification(title, options);
