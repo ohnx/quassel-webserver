@@ -225,6 +225,7 @@ angular.module('quassel', ['ngQuassel', 'ngAria', 'ngSanitize', 'ui.bootstrap', 
 }])
 .factory('$desktop', [function(){
     var granted = false;
+    var snd = new Audio("sounds/notify.mp3"); // buffers automatically when created
     if (!("Notification" in window)) {
         granted = false;
     } else if (Notification.permission === "granted") {
@@ -243,6 +244,7 @@ angular.module('quassel', ['ngQuassel', 'ngAria', 'ngSanitize', 'ui.bootstrap', 
             var options = {
                 icon: 'favicon.ico'
             };
+            snd.play();
             timeout = timeout || 5000;
             if (body) options.body = body;
             var notif = new Notification(title, options);
