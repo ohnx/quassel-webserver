@@ -668,7 +668,7 @@ angular.module('ngSanitize', []).provider('$sanitize', $SanitizeProvider);
  */
 angular.module('ngSanitize').filter('linky', ['$sanitize', function($sanitize) {
   var LINKY_URL_REGEXP =
-        /((ftp|https?):\/\/|(www\.)|(mailto:)?[A-Za-z0-9._%+-]+@)\S*[^\s.;,(){}<>"\u201d\u2019]/i,
+        /((ftp|https?):\/\/|(mailto:)?[a-zA-Z][A-Za-z0-9._%+-]*@)\S*[^\s\.\;\,\(\)\{\}\<\>]/i,
       MAILTO_REGEXP = /^mailto:/i,
       COLOR_CODE_REGEXP = /(&#2;|&#29;|&#31|&#3|&#15|\x02|\x1D|\x1F|\x03|\x0F)/g;
 

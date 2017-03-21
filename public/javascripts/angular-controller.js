@@ -1,3 +1,4 @@
+/* global KeyboardEvent */
 /* global angular */
 /* global $ */
 
@@ -117,15 +118,6 @@ angular.module('quassel')
             $scope.networks.push(network);
             $scope.networkscount = $scope.networks.length;
         });
-    });
-    
-    $scope.$watch('buffer', function(newValue, oldValue) {
-        if (oldValue !== null && (newValue === null || newValue.id !== oldValue.id)) {
-            if ($config.get('emptybufferonswitch', false)) {
-                loadingMoreBacklogs.delete(oldValue.id);
-                oldValue.trimMessages($config.get('emptybufferonswitchvalue', 0));
-            }
-        }
     });
     
     $quassel.on('network.remove', function(networkId) {
@@ -339,11 +331,27 @@ angular.module('quassel')
     });
     
     $scope.showBuffer = function(channel) {
+        if (channel && $scope.buffer === channel) return;
+        var olfbuf = $scope.buffer;
         $scope.buffer = channel;
         if ($scope.buffer !== null) {
             updateMessages();
-            $('#messagebox').focus();
+            if ($responsive.getBreakpoint() !== 'xs') {
+                $('#messagebox').focus();
+            }
             $quassel.markBufferAsRead(channel.id, channel._lastMessageId);
+            
+            // Empty backlogs if configured so
+            if ($config.get('emptybufferonswitch', false)) {
+                loadingMoreBacklogs.delete(olfbuf.id);
+                olfbuf.trimMessages($config.get('emptybufferonswitchvalue', 0));
+            }
+            
+            // Update title
+            var network = $quassel.get().getNetworks().get(channel.network);
+            document.title = channel.name + ' (' + network.networkName + ') – Quassel Web App';
+        } else {
+            document.title = 'Quassel Web App';
         }
     };
 
@@ -396,6 +404,7 @@ angular.module('quassel')
     };
 
     $scope.onDropComplete = function(dragged, dropped) {
+        if (dragged === dropped) return;
         if (dragged.isChannel() || dropped.isChannel()) {
             $alert.warn("Merging non-query buffers is not supported");
         } else if (dragged.network !== dropped.network) {
@@ -1543,6 +1552,16 @@ angular.module('quassel')
             });
         }
     });
+    $scope.sendTab = function($event, sId, key) {
+        $event.preventDefault();
+        if (KeyboardEvent) {
+            var el = document.getElementById(sId);
+            if (el) {
+                var ev = new KeyboardEvent('keydown', {"key": "Tab", "keyCode": 9});
+                el.dispatchEvent(ev);
+            }
+        }
+    };
 }])
 .controller('FilterController', ['$scope', '$config', function($scope, $config) {
     var filters = [

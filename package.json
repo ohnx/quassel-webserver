@@ -1,7 +1,7 @@
 {
   "name": "quassel-webserver",
   "description": "Quassel web interface",
-  "version": "2.2.7",
+  "version": "2.2.8",
   "homepage": "https://github.com/magne4000/quassel-webserver",
   "license": "MIT",
   "author": {
@@ -34,12 +34,13 @@
   ],
   "dependencies": {
     "body-parser": "^1.16.0",
+    "bower": "^1.8.0",
     "commander": "^2.9.0",
     "cookie-parser": "~1.4.3",
     "express": "^4.14.1",
     "less": "^2.7.2",
     "less-middleware": "^2.2.0",
-    "libquassel": "~2.1.4",
+    "libquassel": "~2.1.7",
     "morgan": "^1.8.0",
     "net-browserify-alt": "^1.1.0",
     "pug": "^2.0.0-beta11",
