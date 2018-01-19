@@ -1,5 +1,12 @@
 (function() {
-if (window.external.RunningInApp) {
-    window.external.NotifyItem("Hello!", "Running inside the app and sending you a notification rn.");
-}
+    /* clipboard copying tweaks */
+    var modifyCopy = e => {
+        var data = window.getSelection().toString();
+        console.log(data);
+        data = data.replace(/,?([0-9:]+)\t(.*)\t(.*)\n?/g, "[$1] <$2> $3\n");
+        e.clipboardData.setData('text/plain', data);
+        e.preventDefault();
+    };
+
+    document.addEventListener('copy', modifyCopy);
 })();
