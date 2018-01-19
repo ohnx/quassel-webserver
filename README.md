@@ -1,5 +1,20 @@
-# quassel-webserver
-A web client for Quassel (requires a running quasselcore)
+# ohnx/quassel-webserver
+This is ohnx's fork of quassel-webserver, A web client for Quassel (requires a running quasselcore)
+
+It includes a few modifications over the original:
+
+* Circles now reflect the status of the user (following IRCCloud colours)
+* A greyed-out name is a name of someone who is away
+* Add who is pinging you in IRC notifications
+* Have a sound played when you are pinged in IRC
+* Use a regular space instead of a nbsp when tabcompleting
+* Tweak the clipboard copying format to resembly other IRC clients
+* Change up the colour scheme a bit
+* Color codes in notices (submitted patch to upstream)
+
+![default theme](https://user-images.githubusercontent.com/6683648/35134507-c675627c-fca4-11e7-859f-f671ccaaf3f0.png)
+
+# Original README
 
 :exclamation: Your node version should be at least v4.x (v4, v5, v6 and v7 are supported).
 To install node last version, you can run :
