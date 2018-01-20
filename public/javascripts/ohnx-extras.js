@@ -24,7 +24,7 @@ const IMGUR_API_ID = 'de157a25135a98a';
         var xhr = new XMLHttpRequest();
         var fd = new FormData();
         fd.append('image', img);
-        xhr.open("POST", 'http://api.imgur.com/3/image');
+        xhr.open("POST", 'https://api.imgur.com/3/image');
         xhr.addEventListener('load', function() {
             var resp = JSON.parse(xhr.responseText);
             if (resp.status == 200) {
@@ -32,7 +32,7 @@ const IMGUR_API_ID = 'de157a25135a98a';
                 console.log("Uploaded image to " + url);
                 console.log("Delete link: " + resp.data.deletehash);
                 var str = document.getElementById('messagebox').innerHTML;
-                str.replace("(uploading-"+id+")", url);
+                str = str.replace("(uploading-"+id+")", url);
                 document.getElementById('messagebox').innerHTML = str;
             } else {
                 console.log("Failed to upload image: ");
@@ -64,7 +64,7 @@ const IMGUR_API_ID = 'de157a25135a98a';
             var id = mkstr();
             e.preventDefault();
             document.getElementById('messagebox').innerHTML += " (uploading-"+id+") ";
-            up2imgur(img);
+            up2imgur(img, id);
         }
     };
     document.addEventListener('copy', modifyCopy);

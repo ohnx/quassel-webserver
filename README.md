@@ -10,7 +10,9 @@ It includes a few modifications over the original:
 * Use a regular space instead of a nbsp when tabcompleting
 * Tweak the clipboard copying format to resembly other IRC clients
 * Change up the colour scheme a bit
-* Color codes in notices (submitted patch to upstream)
+* Uploading pasted images to imgur (i.e. in GitHub issues, you can paste an image and 
+the image will upload automatically from your clipboard... quassel-ws will now do the 
+same thing)
 
 ![default theme](https://user-images.githubusercontent.com/6683648/35134507-c675627c-fca4-11e7-859f-f671ccaaf3f0.png)
 
