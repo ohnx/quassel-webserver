@@ -107,7 +107,7 @@ angular.module('quassel')
                 break;
             case MT.Kick:
                 var ind = message.content.indexOf(" ");
-                content = nickplaceholder(message.sender) + " has kicked " + message.content.slice(0, ind) + " (" + message.content.slice(ind+1) + ")";
+                content = nickplaceholder(message.sender) + " has kicked " + message.content.slice(0, ind) + " (" + $filter('color')(message.content.slice(ind+1)) + ")";
                 break;
             case MT.NetsplitJoin:
                 arr = message.content.split("#:#");
