@@ -227,7 +227,7 @@ html(ng-app="quassel", ng-controller="ConfigController")
                 .formatter
                   .btn.btn-default.btn-xs.visible-xs-block.handle(title="Complete nick", ng-mousedown="sendTab($event, 'messagebox')")
                     i.icon-qws.icon-people
-                #messagebox(contenteditable, mimic-input="true", focusonfocus, ng-attr-placeholder='{{nick || "Enter your message here"}}', ng-model="inputmessage", caret)
+                #messagebox(contenteditable, mimic-input="true", focusonfocus, ng-attr-placeholder='{{nick || "Enter your message here"}}', ng-model="inputmessage", caret, autocomplete="off" autocorrect="off" autocapitalize="off")
                 .formatter
                   button.btn.btn-default.btn-xs.handle(type="button", ng-click="formattervisible = !formattervisible", title="Format")
                     i.icon-qws.icon-brush
