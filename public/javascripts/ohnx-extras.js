@@ -5,7 +5,7 @@ const IMGUR_API_ID = 'de157a25135a98a';
         /* text copying */
         var data = window.getSelection().toString();
         console.log(data);
-        data = data.replace(/,?([0-9:]+)\t(.*)\t(.*)\n?/g, "[$1] <$2> $3\r\n");
+        data = data.replace(/,?([0-9:]+)?\t?(.*)\t(.*)\n?/g, "[$1] <$2> $3\r\n");
         e.clipboardData.setData('text/plain', data);
         e.preventDefault();
     };
