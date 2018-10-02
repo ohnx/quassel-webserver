@@ -125,6 +125,7 @@ angular.module('quassel')
                 break;
             default:
                 content = message.content === null ? '' : message.content;
+                content = $filter('color')(content);
                 shouldCompile = false;
         }
         if (shouldCompile) {
