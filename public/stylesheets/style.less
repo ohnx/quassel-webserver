@@ -368,10 +368,9 @@ html, body, .container {
     .animation(spin 1s linear infinite);
 }
 
-.channel:hover .dropdown-channel, .user:hover .dropdown-user, .dropdown-network {
+.dropdown-channel, .dropdown-user, .dropdown-network {
     .icon;
     opacity: 0.5;
-    display: inline-block;
     cursor: pointer;
 
     &:hover {
@@ -381,6 +380,10 @@ html, body, .container {
 
 .dropdown-channel, .dropdown-user {
     display: none;
+}
+
+.channel:hover .dropdown-channel, .user:hover .dropdown-user, .dropdown-network {
+    display: inline-block;
 }
 
 .input {
@@ -730,7 +733,7 @@ input[type="number"] {
 
 @media (max-width: 767px) {
     // Overlay the sidebars over the backlog.
-    #buffer-pane, #nick-pane {
+    .pane {
         position: absolute;
         top: 48px;
         bottom: 32px;
@@ -771,10 +774,26 @@ input[type="number"] {
         right: 0;
         box-shadow: -10px 0 10px -5px #000;
     }
-
-    // Hide timestamp
-    .backlog .irc-message > span.timestamp {
-        display: none;
+    
+    .backlog {
+        .irc-message > .timestamp {
+            display: table-cell;
+            
+            > span {
+                padding-right: 6px;
+                padding-left: 1px;
+                font-size: 0.8em;
+                font-family: "Roboto";
+            }
+        }
+        
+        .irc-message > .nick, .irc-message > .message {
+            display: inline;
+        }
+    }
+    
+    .dropdown-channel, .dropdown-user {
+        display: inline-block;
     }
 }
 
