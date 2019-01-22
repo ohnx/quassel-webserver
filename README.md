@@ -18,12 +18,8 @@ same thing)
 
 # Original README
 
-:exclamation: Your node version should be at least v4.x (v4, v5, v6 and v7 are supported).
-To install node last version, you can run :
-```
-npm -g install n
-n latest
-```
+:exclamation: Your node version should be at least v6.x (v6 through v10 are supported).
+To install node last version, you can install [nvm](https://github.com/creationix/nvm).
 
 ### Screenshots
 
@@ -35,10 +31,12 @@ n latest
 
 ### Installation
 
-With npm:
+With git:
 
 ```sh
-npm install quassel-webserver
+git clone https://github.com/magne4000/quassel-webserver.git
+cd quassel-webserver
+npm install --production
 ```
 
 With snap, in any of the [supported Linux distributions](http://snapcraft.io/docs/core/install#ubuntu):
@@ -53,7 +51,7 @@ Get the code and install the server with:
 ```sh
 git clone https://github.com/magne4000/quassel-webserver.git
 cd quassel-webserver
-npm install --production
+npm install
 ```
 #### Update
 Update the server with: 
@@ -176,5 +174,5 @@ It means that quassel-webserver has been killed prematurely. You just have to ma
 `#quassel-webserver` on Freenode
 
 ## License
-Copyright (c) 2014-2016 Joël Charles  
+Copyright (c) 2019 Joël Charles  
 Licensed under the MIT license.
