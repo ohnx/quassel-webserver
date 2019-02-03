@@ -2,6 +2,7 @@
 /* global KeyboardEvent */
 /* global angular */
 /* global $ */
+/* global emojione */
 
 angular.module('quassel')
 .controller('NetworkController',
@@ -1468,7 +1469,7 @@ angular.module('quassel')
                 if (lines && lines.length > 0) {
                     $scope.cleanMessageHistory($scope.buffer.id);
                     for (var idx in lines) {
-                        $quassel.core().sendMessage($scope.buffer.getBufferInfo(), lines[idx]);
+                        $quassel.core().sendMessage($scope.buffer.getBufferInfo(), emojione.shortnameToUnicode(lines[idx]));
                     }
                     $scope.addMessageHistory($scope.inputmessage, $scope.buffer.id);
                     $scope.inputmessage = '';
