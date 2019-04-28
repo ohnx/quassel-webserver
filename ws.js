@@ -33,7 +33,7 @@ module.exports = function(server, settings) {
             }
             
             const socket = createSocket(server, port, (err) => {
-                if (err) return ws.send(err);
+                if (err) return ws.send(err.toString());
             });
             
             ws.on('message', function (data) {
