@@ -25,14 +25,14 @@ module.exports = function(server, settings) {
     wss.on('connection', function connection(ws, req) {
         ws.once('message', function incoming(targetInfo) {
             // First message is the information about the target server
-            var { server, port } = JSON.parse(targetInfo);
+            var { host, port } = JSON.parse(targetInfo);
             
-            if (settings.forcedefault) {
-                server = settings.default.host;
-                port = settings.default.port;
+            if (settings.val.forcedefault) {
+                host = settings.val.default.host;
+                port = settings.val.default.port;
             }
             
-            const socket = createSocket(server, port, (err) => {
+            const socket = createSocket(host, port, (err) => {
                 if (err) return ws.send(err.toString());
             });
             
